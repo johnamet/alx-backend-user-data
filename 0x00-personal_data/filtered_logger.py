@@ -13,7 +13,7 @@ PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(fields: List[str], redaction: str,
-                 messgae: str, separator: str):
+                 messgae: str, separator: str) -> str:
     """
     Filter Datum
     :param fields: list of str representing all fields to obfuscate

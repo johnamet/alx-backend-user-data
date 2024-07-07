@@ -73,6 +73,9 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
+    """"
+    Get database connection
+    """
     user = os.getenv("PERSONAL_DATA_DB_USERNAME")
     password = os.getenv("PERSONAL_DATA_DB_PASSWORD")
     host = os.getenv("PERSONAL_DATA_DB_HOST")
@@ -84,6 +87,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 def main():
+    """
+    Main function
+    :return:
+    """
     db = get_db()
     cursor = db.cursor(dictionary=True)
     cursor.execute("SELECT * FROM users;")

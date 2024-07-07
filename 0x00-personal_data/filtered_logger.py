@@ -13,7 +13,7 @@ PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(fields: List[str], redaction: str,
-                 messgae: str, separator: str) -> str:
+                 message: str, separator: str) -> str:
     """
     Filter Datum
     :param fields: list of str representing all fields to obfuscate
@@ -27,7 +27,7 @@ def filter_datum(fields: List[str], redaction: str,
     pattern = '|'.join([f'{field}=[^{separator}]+' for field in fields])
     return re.sub(pattern,
                   lambda match: match.group()
-                  .split('=')[0] + '=' + redaction, messgae)
+                  .split('=')[0] + '=' + redaction, message)
 
 
 class RedactingFormatter(logging.Formatter):

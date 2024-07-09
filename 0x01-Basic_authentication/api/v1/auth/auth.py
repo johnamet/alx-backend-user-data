@@ -2,8 +2,7 @@
 """
 The Authentication Module
 """
-from flask import request
-from typing import List
+from typing import List, TypeVar
 
 
 class Auth:
@@ -16,15 +15,21 @@ class Auth:
         Defines path that requires auth
         """
 
-        return False
+        if not excluded_paths or not path:
+            return True
 
-    def authorization_header(self,request=None) -> str:
+        path = path.rstrip('/')
+
+        normalised_excluded_paths = {p.rstrip('/') for p in excluded_paths}
+
+        return not (path in normalised_excluded_paths)
+
+    def authorization_header(self, request=None) -> str:
         """
         Flask request object
         """
 
         return None
-
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
@@ -32,4 +37,3 @@ class Auth:
         """
 
         return None
-

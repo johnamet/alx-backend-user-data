@@ -14,7 +14,8 @@ class BasicAuth(Auth):
     Basic auth class
     """
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self,
+                                            authorization_header: str) -> str:
         if not authorization_header or \
                 not isinstance(authorization_header, str) or \
                 not authorization_header.startswith('Basic '):
@@ -22,7 +23,9 @@ class BasicAuth(Auth):
 
         return authorization_header.split(" ")[1]
 
-    def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:
+    def decode_base64_authorization_header(self,
+                                           base64_authorization_header: str) \
+            -> str:
         """
         Decode base64 encoded authorization header
         Args:
@@ -33,8 +36,8 @@ class BasicAuth(Auth):
         """
 
         decoded = None
-
-        if not base64_authorization_header or not isinstance(base64_authorization_header, str):
+        if (not base64_authorization_header or not
+           isinstance(base64_authorization_header, str)):
             return None
 
         try:
@@ -44,7 +47,9 @@ class BasicAuth(Auth):
 
         return decoded.decode('utf-8')
 
-    def extract_user_credentials(self, decoded_base64_authorization_header: str) -> (str, str):
+    def extract_user_credentials(self,
+                                 decoded_base64_authorization_header: str)\
+            -> (str, str):
         """
         extract user credentials from base64 encoded authorization header
         Args:
@@ -65,7 +70,8 @@ class BasicAuth(Auth):
 
         return email, password
 
-    def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar('User'):
+    def user_object_from_credentials(self, user_email: str,
+                                     user_pwd: str) -> TypeVar('User'):
         """
         Create a user object from user credentials
         Args:
@@ -104,8 +110,9 @@ class BasicAuth(Auth):
 
         authorisation_header = (self.extract_base64_authorization_header
                                 (request.headers.get('Authorization')))
-        decoded_base64_authorization_header = (self.decode_base64_authorization_header
-                                               (authorisation_header))
+        decoded_base64_authorization_header = \
+            (self.decode_base64_authorization_header
+                (authorisation_header))
         email, pwd = (self.extract_user_credentials
                       (decoded_base64_authorization_header))
 

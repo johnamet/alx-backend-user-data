@@ -88,10 +88,15 @@ class BasicAuth(Auth):
             Optional[User]: The User object
             if credentials are valid, otherwise None.
         """
+
         if not user_email or not user_pwd:
             return None
 
-        user_list = User.search({"email": user_email})
+        try:
+            user_list = User.search({"email": user_email})
+        except KeyError:
+            return None
+
         if not user_list:
             return None
 

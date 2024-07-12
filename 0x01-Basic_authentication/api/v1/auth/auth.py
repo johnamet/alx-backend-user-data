@@ -22,7 +22,6 @@ class Auth:
 
         normalised_excluded_paths = {p.rstrip('/') for p in excluded_paths}
 
-
         # if not (path in normalised_excluded_paths):
         #     return True
 

@@ -32,7 +32,7 @@ class BasicAuth(Auth):
         return None
 
     def decode_base64_authorization_header(self,
-                                           base64_authorization_header: str)\
+                                           base64_authorization_header: str) \
             -> Optional[str]:
         """
         Decodes the Base64 encoded Authorization header.
@@ -54,7 +54,7 @@ class BasicAuth(Auth):
             return None
 
     def extract_user_credentials(self,
-                                 decoded_base64_authorization_header: str)\
+                                 decoded_base64_authorization_header: str) \
             -> Tuple[Optional[str], Optional[str]]:
         """
         Extracts user credentials from the decoded Authorization header.
@@ -75,7 +75,7 @@ class BasicAuth(Auth):
         return None, None
 
     def user_object_from_credentials(self, user_email: str,
-                                     user_pwd: str)\
+                                     user_pwd: str) \
             -> Optional[TypeVar('User')]:
         """
         Retrieves a User object based on the provided credentials.

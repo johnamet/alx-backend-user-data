@@ -24,8 +24,11 @@ class Auth:
 
         for excluded_path in normalised_excluded_paths:
             if excluded_path.endswith("*"):
+                print(excluded_path)
                 path_name = path.split('/')[-1]
-                excluded_path_name = excluded_path.split('/')[-1][:-2]
+                print(path_name)
+                excluded_path_name = excluded_path.split('/')[-1][:-1]
+                print(excluded_path_name)
                 if path_name.startswith(excluded_path_name):
                     return False
 

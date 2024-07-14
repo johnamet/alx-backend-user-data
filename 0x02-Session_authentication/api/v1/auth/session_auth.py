@@ -5,6 +5,7 @@ The session auth module
 import uuid
 
 from api.v1.auth.auth import Auth
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -41,3 +42,21 @@ class SessionAuth(Auth):
             return None
 
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """
+        get current user
+        """
+        session_id = self.session_cookie(request)
+
+        user_id = self.user_id_for_session_id(session_id)
+
+        if not user_id:
+            return None
+
+        user = User.get(user_id)
+
+        if not user:
+            return None
+
+        return User.get(user_id)

@@ -80,5 +80,3 @@ class SessionAuth(Auth):
         del self.user_id_by_session_id[session_id]
 
         return True
-
-

@@ -25,6 +25,9 @@ class SessionExpAuth(SessionAuth):
             self.session_duration = 0
 
     def create_session(self, user_id = None) -> str:
+        """
+        Creates a new session
+        """
         session_id = None
 
         if not user_id:

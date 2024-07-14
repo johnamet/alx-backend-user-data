@@ -9,6 +9,16 @@ from models.user import User
 user_email = "bob@hbtn.io"
 user_clear_pwd = "H0lbertonSchool98!"
 
+user_email1 = "bobsession@hbtn.io"
+user_clear_pwd1 = "fake pwd"
+user1 = User()
+
+user1.email = user_email1
+user1.password = user_clear_pwd1
+
+user1.save()
+print(user1.email, user1.id)
+
 user = User()
 user.email = user_email
 user.password = user_clear_pwd

@@ -5,6 +5,7 @@ The session api view module
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
+import os
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
@@ -38,7 +39,7 @@ def auth_session():
     from api.v1.app import auth
     session = auth.create_session(user.id)
 
-    resp = jsonify(User.to_json())
+    resp = jsonify(user.to_json())
 
     resp.set_cookie(os.getenv('SESSION_NAME'), session)
     return resp

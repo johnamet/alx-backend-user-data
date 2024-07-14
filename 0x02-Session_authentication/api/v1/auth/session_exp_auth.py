@@ -12,7 +12,6 @@ class SessionExpAuth(SessionAuth):
     """
     Expiration class
     """
-    session_dictionary = {}
 
     def __init__(self):
         super().__init__()
@@ -37,9 +36,16 @@ class SessionExpAuth(SessionAuth):
             session_id = super().create_session(user_id)
         except Exception:
             return None
-        self.session_dictionary["user_id"] = user_id
-        self.session_dictionary[session_id] = self.user_id_by_session_id
-        self.session_dictionary["created_at"] = datetime.datetime.now()
+
+        if not session_id:
+            return None
+
+        session_dictionary = {
+            "user_id": user_id,
+            "created_at":datetime.datetime.now()
+        }
+
+        self.user_id_by_session_id[session_id] = session_dictionary
 
         return session_id
 

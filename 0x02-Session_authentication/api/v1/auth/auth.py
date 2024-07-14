@@ -2,8 +2,8 @@
 """
 The Authentication Module
 """
-from typing import List, TypeVar
 import os
+from typing import List, TypeVar
 
 
 class Auth:

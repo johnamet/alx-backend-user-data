@@ -27,7 +27,6 @@ class SessionExpAuth(SessionAuth):
         """
         Creates a new session
         """
-        session_id = None
 
         if not user_id:
             return None
@@ -42,7 +41,7 @@ class SessionExpAuth(SessionAuth):
 
         session_dictionary = {
             "user_id": user_id,
-            "created_at":datetime.datetime.now()
+            "created_at": datetime.datetime.now()
         }
 
         self.user_id_by_session_id[session_id] = session_dictionary
@@ -61,15 +60,15 @@ class SessionExpAuth(SessionAuth):
             return None
 
         if self.session_duration <= 0:
-            return self.session_dictionary["user_id"]
+            return self.user_id_by_session_id["user_id"]
 
-        if not self.session_dictionary.get("created_at"):
+        if not self.user_id_by_session_id.get("created_at"):
             return None
 
-        total_sec = (self.session_dictionary.get("created_at") +
+        total_sec = (self.user_id_by_session_id.get("created_at") +
                      datetime.timedelta(seconds=self.session_duration))
 
         if datetime.datetime.now() > total_sec:
             return None
 
-        return self.session_dictionary["user_id"]
+        return self.user_id_by_session_id.get(session_id)["user_id"]

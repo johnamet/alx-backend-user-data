@@ -24,7 +24,7 @@ class SessionExpAuth(SessionAuth):
         except Exception:
             self.session_duration = 0
 
-    def create_session(self, user_id: str = None) -> str:
+    def create_session(self, user_id = None) -> str:
         session_id = None
 
         if not user_id:
@@ -40,7 +40,7 @@ class SessionExpAuth(SessionAuth):
 
         return session_id
 
-    def user_id_for_session_id(self, session_id: str = None) -> str:
+    def user_id_for_session_id(self, session_id = None) -> str:
         """
         user id for session id
         """

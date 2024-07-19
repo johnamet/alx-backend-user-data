@@ -18,6 +18,7 @@ def _generate_uuid() -> str:
     """
     return str(uuid.uuid4())
 
+
 def _hash_password(password: str) -> bytes:
     """
     Hashes password.
@@ -52,8 +53,8 @@ class Auth:
             if user:
                 raise ValueError(f"User {email} already exists")
         except NoResultFound:
-                user = self._db.add_user(email, _hash_password(password))
-                return user
+            user = self._db.add_user(email, _hash_password(password))
+            return user
 
     def valid_login(self, email: str, password: str) -> bool:
         """
@@ -67,7 +68,8 @@ class Auth:
             user = self._db.find_user_by(email=email)
 
             if user:
-                return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+                return bcrypt.checkpw(password.encode('utf-8'),
+                                      user.hashed_password)
         except NoResultFound:
             return False
 
@@ -86,7 +88,9 @@ class Auth:
         except NoResultFound:
             return None
 
-    def get_user_from_session_id(self, session_id: str) -> Union[TypeVar("User"), None]:
+    def get_user_from_session_id(self,
+                                 session_id: str)\
+            -> Union[TypeVar("User"), None]:
         """
         Retrieve the user from the session id.
         :param session_id: The session id
@@ -101,7 +105,6 @@ class Auth:
 
         except NoResultFound:
             return None
-
 
     def destroy_session(self, user_id: int) -> None:
         """
@@ -152,4 +155,3 @@ class Auth:
                 raise ValueError
         except NoResultFound:
             raise ValueError
-

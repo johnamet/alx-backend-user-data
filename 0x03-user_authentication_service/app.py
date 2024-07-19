@@ -40,12 +40,14 @@ def register_user():
         user = AUTH.register_user(email=email, password=password)
 
         if user:
-            return jsonify({"email": user.email, "message": "user created"}), 201
+            return jsonify({"email": user.email,
+                            "message": "user created"}), 201
         else:
             return jsonify({"message": "Invalid data"}), 400
 
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
+
 
 @app.route("/sessions", methods=['POST'], strict_slashes=False)
 def register_session():
@@ -77,7 +79,6 @@ def register_session():
     else:
         abort(401)
 
-from flask import Flask, request, jsonify, abort, make_response, redirect, url_for
 
 @app.route("/sessions", methods=['DELETE'], strict_slashes=False)
 def logout():
@@ -100,6 +101,7 @@ def logout():
     else:
         abort(403)
 
+
 @app.route('/profile', methods=["GET"], strict_slashes=False)
 def profile():
     """
@@ -113,11 +115,12 @@ def profile():
     if session_id:
         user = AUTH.get_user_from_session_id(session_id)
         if user:
-            return jsonify({"email":user.email})
+            return jsonify({"email": user.email})
         else:
             abort(403)
     else:
         abort(403)
+
 
 @app.route("/reset_password", methods=["POST"], strict_slashes=False)
 def reset_password():
@@ -159,18 +162,16 @@ def update_password():
     reset_token = data.get("reset_token")
     new_password = data.get("new_password")
 
-    if not data or 'password' not in data or\
-            'new_password' not in data or\
+    if not data or 'password' not in data or \
+            'new_password' not in data or \
             'reset_token' not in data:
         abort(403)
-
     try:
-        AUTH.update_password(reset_password=reset_password, password=new_password)
-        return jsonify({"email": email, "message":"Password updated"}), 200
+        AUTH.update_password(reset_password=reset_password,
+                             password=new_password)
+        return jsonify({"email": email, "message": "Password updated"}), 200
     except ValueError:
         abort(403)
-
-
 
 
 if __name__ == '__main__':

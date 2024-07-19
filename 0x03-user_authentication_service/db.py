@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """DB module"""
-from typing import TypeVar
+from typing import Type
 
 from sqlalchemy import create_engine
 from sqlalchemy.exc import NoResultFound, InvalidRequestError
@@ -27,8 +27,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str,
-                 hashed_password: str) -> TypeVar('User'):
+    def add_user(self, email: str, hashed_password: str) -> User:
         """
         Add a user to the database.
 
@@ -50,40 +49,51 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs) -> TypeVar('User'):
+    def find_user_by(self, **kwargs) -> Type[User]:
         """
-        Find a user by email.
-        :param **kwargs: The email of the user.
-        :return: user
-        """
+        Find a user by attributes.
 
+        Args:
+            **kwargs: The attributes to filter the user by.
+
+        Returns:
+            User: The found User object.
+
+        Raises:
+            NoResultFound: If no user is found.
+            InvalidRequestError: If the query is invalid.
+        """
         try:
-            user = (self._session.query(User)
-                    .filter_by(**kwargs).one())
+            user = self._session.query(User).filter_by(**kwargs).one()
             return user
         except NoResultFound as e:
             raise NoResultFound from e
         except InvalidRequestError as e:
             raise InvalidRequestError from e
 
-    def update_user(self, user_id: int,
-                    **kwargs):
+    def update_user(self, user_id: int, **kwargs) -> None:
         """
-        Update a user.
-        :param kwargs: the keyword arguments of the user.
-        :return: user
-        """
+        Update a user's attributes.
 
+        Args:
+            user_id (int): The ID of the user to update.
+            **kwargs: The attributes to update.
+
+        Raises:
+            ValueError: If the user is not found.
+        """
         try:
             user = self.find_user_by(id=user_id)
-        except Exception as e:
-            raise ValueError
+        except NoResultFound:
+            raise ValueError("User not found")
+
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+
+        self._session.add(user)
 
         try:
-            for key, value in kwargs.items():
-                setattr(user, key, value)
-
-            self._session.add(user)
             self._session.commit()
         except Exception as e:
             self._session.rollback()
+            raise e

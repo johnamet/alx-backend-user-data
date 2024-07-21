@@ -41,7 +41,7 @@ def register_user():
 
         if user:
             return jsonify({"email": user.email,
-                            "message": "user created"}), 201
+                            "message": "user created"}), 200
         else:
             return jsonify({"message": "Invalid data"}), 400
 
@@ -75,7 +75,7 @@ def register_session():
         if session_id:
             response = jsonify({"email": email, "message": "logged in"})
             response.set_cookie("session_id", session_id)
-            return response
+            return response, 200
     else:
         abort(401)
 

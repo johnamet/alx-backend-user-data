@@ -2,7 +2,7 @@
 """
 flask app
 """
-from flask import Flask, request, jsonify, abort, redirect, url_for
+from flask import Flask, request, jsonify, abort, redirect, url_for, make_response
 from auth import Auth
 
 AUTH = Auth()
@@ -90,10 +90,9 @@ def logout():
     if session_id:
         user = AUTH.get_user_from_session_id(session_id=session_id)
         if user:
+            print(user)
             AUTH.destroy_session(user_id=user.id)
-            response = make_response(redirect(url_for('index')))
-            response.set_cookie("session_id", '', expires=0)
-            return response, 302
+            return redirect("/"), 302
         else:
             abort(403)
     else:

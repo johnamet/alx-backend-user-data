@@ -159,7 +159,7 @@ def update_password():
     reset_token = data.get("reset_token")
     new_password = data.get("new_password")
 
-    if not data or 'password' not in data or \
+    if not data or 'email' not in data or \
             'new_password' not in data or \
             'reset_token' not in data:
         abort(403)

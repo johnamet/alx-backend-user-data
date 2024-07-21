@@ -143,6 +143,7 @@ class Auth:
     def update_password(self, reset_token: str, password: str) -> None:
         """
         Resets the user password
+        :param password:
         :param reset_token:
         :return:
         """
@@ -151,7 +152,7 @@ class Auth:
             user = self._db.find_user_by(reset_token=reset_token)
             if user:
                 hash_ = _hash_password(password)
-                self._db.update_user(user_id=user.id, hashed_password=hash_)
+                self._db.update_user(user_id=user.id, hashed_password=hash_, reset_token=None)
             else:
                 raise ValueError
         except NoResultFound:

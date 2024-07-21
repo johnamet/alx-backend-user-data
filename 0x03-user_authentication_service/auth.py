@@ -9,6 +9,7 @@ import bcrypt
 from sqlalchemy.orm.exc import NoResultFound
 
 from db import DB
+from user import User
 
 
 def _generate_uuid() -> str:
@@ -39,12 +40,12 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> TypeVar("User"):
+    def register_user(self, email: str, password: str) -> User:
         """
         Register a new user.
         :param email:  Email of the user
-        :param password: Password of the user
-        :return: The User
+        :param password: Password of user
+        :return: User
         """
 
         try:

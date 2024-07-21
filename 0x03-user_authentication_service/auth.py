@@ -6,7 +6,7 @@ import uuid
 from typing import TypeVar, Union
 
 import bcrypt
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 
 from db import DB
 

@@ -93,7 +93,7 @@ def logout():
             AUTH.destroy_session(user_id=user.id)
             response = make_response(redirect(url_for('index')))
             response.set_cookie("session_id", '', expires=0)
-            return response
+            return response, 302
         else:
             abort(403)
     else:

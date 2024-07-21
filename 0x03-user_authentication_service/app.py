@@ -61,8 +61,6 @@ def register_session():
     except Exception:
         data = request.form.to_dict()
 
-    print(data)
-
     email = data.get("email")
     password = data.get("password")
 
